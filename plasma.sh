@@ -23,13 +23,24 @@ EOF
 chmod +x "$XDG_RUNTIME_DIR/nested-plasma/kwin_wayland_wrapper"
 
 # pkexec management
-cat > "$XDG_RUNTIME_DIR/nested-plasma/zenity-askpass" <<'EOF'
+cat > "$XDG_RUNTIME_DIR/nested-plasma/sudo-askpass" <<'EOF'
 #!/usr/bin/env bash
-exec zenity --password --title="Authentication Required"
+if command -v kdialog >/dev/null 2>&1; then
+    if password=$(kdialog --title "Authentication Required" --password "Type your password"); then
+        echo "$password"
+    else
+        exit 1
+    fi
+elif command -v zenity >/dev/null 2>&1; then
+    zenity --password --title="Authentication Required"
+else
+    echo "No supported dialog tool found (kdialog or zenity)" >&2
+    exit 1
+fi
 EOF
-chmod +x "$XDG_RUNTIME_DIR/nested-plasma/zenity-askpass"
+chmod +x "$XDG_RUNTIME_DIR/nested-plasma/sudo-askpass"
 
-export SUDO_ASKPASS="$XDG_RUNTIME_DIR/nested-plasma/zenity-askpass"
+export SUDO_ASKPASS="$XDG_RUNTIME_DIR/nested-plasma/sudo-askpass"
 
 cat > "$XDG_RUNTIME_DIR/nested-plasma/pkexec" <<'EOF'
 #!/usr/bin/env bash
@@ -70,6 +81,31 @@ exec "$real" --disable-gpu-compositing "\$@"
 EOF
     chmod +x "$XDG_RUNTIME_DIR/nested-plasma/$browser"
 done
+# Flatpak Chromium-based browsers: disable GPU compositing
+cat > "$XDG_RUNTIME_DIR/nested-plasma/flatpak" <<'EOF'
+#!/usr/bin/env bash
+real="$XDG_RUNTIME_DIR/nested-plasma/real-flatpak"
+[ "$1" = "run" ] || exec "$real" "$@"
+
+new_arg="--disable-gpu-compositing"
+
+args=("$@")
+result=()
+
+for arg in "${args[@]}"; do
+    result+=("$arg")
+
+    case "$arg" in
+        org.chromium.Chromium|com.google.Chrome|com.brave.Browser|com.microsoft.Edge|com.vivaldi.Vivaldi|io.github.ungoogled_software.ungoogled_chromium)
+            result+=("$new_arg")
+        ;;
+    esac
+done
+
+exec "$real" "${result[@]}"
+EOF
+chmod +x "$XDG_RUNTIME_DIR/nested-plasma/flatpak"
+
 
 # Path
 export PATH="$XDG_RUNTIME_DIR/nested-plasma:$PATH"
@@ -82,4 +118,3 @@ export XDG_SESSION_CLASS=user
 
 # Run Plasma
 dbus-run-session startplasma-wayland &
-
