@@ -36,6 +36,10 @@ Some games that capture the mouse for in-game camera movement may not capture it
 <details>
 <summary><strong>Fullscreen Video Unfullscreening on Chromium browsers.</strong></summary>
 
+This is now managed automatically for package manager installed browsers, for flatpak browsers, make sure that the `Exec=` line in the browser's `.desktop` file points to `flatpak` instead of `/usr/bin/flatpak`.
+
+<details>
+<summary>See old fix here</summary>
 When watching videos in Chromium based browser through the stream, toggling fullscreen immediately unfullscreens the video again. This does not happen when GPU acceleration is disabled entirely, and is fixed by disabling GPU compositing with `--disable-gpu-compositing`.
 
 1. **Set the flag via config file (try first).**
@@ -77,4 +81,5 @@ When watching videos in Chromium based browser through the stream, toggling full
     ```
 
     Save, then re-run the check in Step 2.
+</details>
 </details>
