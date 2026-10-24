@@ -36,7 +36,13 @@ Some games that capture the mouse for in-game camera movement may not capture it
 <details>
 <summary><strong>Fullscreen Video Unfullscreening on Chromium browsers.</strong></summary>
 
-This is now managed automatically for package manager installed browsers, for flatpak browsers, make sure that the `Exec=` line in the browser's `.desktop` file points to `flatpak` instead of `/usr/bin/flatpak`.
+Package manager installed browsers are now configured automatically.
+
+For Flatpak browsers, ensure the browser's `.desktop` file uses `Exec=flatpak` instead of `Exec=/usr/bin/flatpak`. If needed, apply one of these fixes:
+
+- **Manual:** Replace all occurrences of `Exec=/usr/bin/flatpak` with `Exec=flatpak` in the browser's `.desktop` file.
+- **System-wide install:** `sudo FLATPAK_BINARY="flatpak" flatpak install <appid>`
+- **User install:** `FLATPAK_BINARY="flatpak" flatpak install --user <appid>`
 
 <details>
 <summary>See old fix here</summary>
