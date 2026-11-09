@@ -60,14 +60,14 @@ polaris
 <details>
 <summary><strong>Mouse capture.</strong></summary>
 
-Some games that capture the mouse for in-game camera movement may not capture it correctly, preventing the camera from moving. This is a known issue that we are currently working to fix.
+Some games that capture the mouse for in-game camera movement may not capture it correctly, preventing the camera from moving. This is a known issue that is currently being addressed.
 
 **Temporary workaround:** When a game needs to capture the mouse, press the **Right Ctrl** key while the stream is focused.
 </details>
 <details>
 <summary><strong>Fullscreen Video Unfullscreening on Chromium browsers.</strong></summary>
 
-Package manager installed browsers are now configured automatically.
+Package manager installed browsers are now managed automatically.
 
 For Flatpak browsers, ensure the browser's `.desktop` file uses `Exec=flatpak` instead of `Exec=/usr/bin/flatpak`. If needed, apply one of these fixes:
 
