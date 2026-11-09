@@ -1,9 +1,9 @@
-# Full Plasma for Polaris
-Launch a full KDE Pasma session with polaris's Private Stream (https://github.com/papi-ux/polaris)
+# My Linux game streaming and remote desktop solution
+Run a full KDE Pasma session in polaris's Private Stream (https://github.com/papi-ux/polaris)
 
 # Installation
 ### Dependencies
-- Polaris
+- [Polaris](https://github.com/papi-ux/polaris)
 - labwc
 - KDE Plasma Wayland
 - xwayland
