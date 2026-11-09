@@ -25,6 +25,37 @@ Launch a full KDE Pasma session with polaris's Private Stream (https://github.co
     3. Set `Working Directory` to `$HOME`.
 10. Add a Moonlight/Nova client from `Polaris Web UI > Devices`.
 11. Open the `Plasma` app from your client.
+<details>
+<summary>Optional: run polaris with its own pipewire socket for audio isolation.</summary>
+    
+Run polaris using the following script:
+
+```
+#!/usr/bin/env bash
+set -e
+ALT="$XDG_RUNTIME_DIR/pw-polaris"
+BUS="$ALT/bus"
+mkdir -p "$ALT" && chmod 700 "$ALT"
+
+# Private session bus
+dbus-daemon --session --fork --nopidfile --address="unix:path=$BUS"
+
+# Export and run services
+export DBUS_SESSION_BUS_ADDRESS="unix:path=$BUS"
+export XDG_RUNTIME_DIR="$ALT"
+export PULSE_SERVER="unix:$ALT/pulse/native"
+pipewire &
+sleep 1
+wireplumber &
+pipewire-pulse &
+sleep 1
+
+# Run polaris
+polaris
+```
+
+</details>
+
 # Troublesooting
 <details>
 <summary><strong>Mouse capture.</strong></summary>
