@@ -6,9 +6,7 @@ Run a full KDE Pasma session in polaris's Private Stream (https://github.com/pap
 - [Polaris](https://github.com/papi-ux/polaris)
 - labwc
 - KDE Plasma Wayland
-- xwayland
-- dbus
-- zenity
+- kdialog or zenity
 
 ### Installation steps
 1. [Install polaris](https://github.com/papi-ux/polaris) and all dependencies.
@@ -20,11 +18,11 @@ Run a full KDE Pasma session in polaris's Private Stream (https://github.com/pap
 7. Select `Private Stream` from `Polaris Web UI > Settings > Audio/Video`.
 8. Save `plasma.sh`(from the repo) and make it executable.
 9. Add `plasma.sh` as an app in `Polaris Web UI > Library > Add New`.
-    1. Set `Application Name` to `Plasma`.
+    1. Set `Application Name` to `!KDE Plasma`.
     2. Set `Command` to the full path to `plasma.sh`.
     3. Set `Working Directory` to `$HOME`.
 10. Add a Moonlight/Nova client from `Polaris Web UI > Devices`.
-11. Open the `Plasma` app from your client.
+11. Open the `!KDE Plasma` app from your client.
 <details>
 <summary>Optional: run polaris with its own pipewire socket for audio isolation.</summary>
     
