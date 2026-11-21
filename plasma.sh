@@ -84,7 +84,7 @@ done
 # Flatpak Chromium-based browsers: disable GPU compositing
 cat > "$XDG_RUNTIME_DIR/nested-plasma/flatpak" <<'EOF'
 #!/usr/bin/env bash
-real="$XDG_RUNTIME_DIR/nested-plasma/real-flatpak"
+real="/usr/bin/flatpak"
 [ "$1" = "run" ] || exec "$real" "$@"
 
 new_arg="--disable-gpu-compositing"
@@ -118,3 +118,4 @@ export XDG_SESSION_CLASS=user
 
 # Run Plasma
 dbus-run-session startplasma-wayland &
+
