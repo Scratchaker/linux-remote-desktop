@@ -3,6 +3,7 @@ set -e
 
 trap 'cleanup' EXIT
 cleanup() {
+    echo "Exiting..."
     systemctl --user restart xdg-document-portal xdg-desktop-portal
 }
 
@@ -117,5 +118,10 @@ export XDG_SEAT=seat0
 export XDG_SESSION_CLASS=user
 
 # Run Plasma
-dbus-run-session startplasma-wayland &
+set +e
+dbus-run-session startplasma-wayland
+status=$?
+set -e
+
+exit "$status"
 
